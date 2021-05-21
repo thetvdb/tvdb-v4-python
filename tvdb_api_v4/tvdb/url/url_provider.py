@@ -1,3 +1,6 @@
+import urllib
+
+
 class Url:
     def __init__(self):
         self.base_url = "https://api4.thetvdb.com/v4"
@@ -107,4 +110,18 @@ class Url:
 
     def updates_url(self, since=0):
         url = "{}/updates?since={}".format(self.base_url, since)
+        return url
+
+    def tag_options_url(self):
+        url = "{}/tags/options".format(self.base_url)
+        return url
+
+    def tag_option_url(self, id):
+        url = "{}/tags/options/{}".format(self.base_url, id)
+        return url
+
+    def search_url(self, query, filters):
+        filters["query"] = query
+        qs = urllib.urlencode(filters)
+        url = "{}/search?{}".format(self.base_url, qs)
         return url

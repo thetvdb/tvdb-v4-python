@@ -138,3 +138,7 @@ class Api:
     def get_tag_option(self, id=0):
         url = self.url.tag_option_url()
         return self.request.make_request(url)
+
+    def search(self, query, **kwargs):
+        url = self.url.search_url(query, kwargs)
+        return self.request.make_request(url)
