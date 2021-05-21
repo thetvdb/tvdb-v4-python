@@ -3,8 +3,6 @@ import urllib.parse
 import urllib.request
 from urllib.request import urlopen
 
-url = "http://localhost:8081/v4/login"
-
 
 class Auth:
     def __init__(self, url, apikey, pin=""):
@@ -18,4 +16,6 @@ class Auth:
         with urllib.request.urlopen(req, data=loginInfoBytes) as response:
             res = json.load(response)
             self.token = res["data"]["token"]
-            print(self.token)
+
+    def get_token(self):
+        return self.token
