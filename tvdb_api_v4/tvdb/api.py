@@ -4,7 +4,7 @@ from url.url_provider import Url
 
 
 class Api:
-    def __init__(self, apikey, pin=""):
+    def __init__(self, apikey: str, pin=""):
         self.url = Url()
         login_url = self.url.login_url()
         self.auth = Auth(login_url, apikey, pin)
@@ -19,31 +19,31 @@ class Api:
         url = self.url.artwork_types_url()
         return self.request.make_request(url)
 
-    def get_artwork(self, id):
+    def get_artwork(self, id: int) -> dict:
         url = self.url.artwork_url(id)
         return self.request.make_request(url)
 
-    def get_artwork_extended(self, id):
+    def get_artwork_extended(self, id: int) -> dict:
         url = self.url.artwork_url(id, True)
         return self.request.make_request(url)
 
-    def get_all_awards(self, page=0):
+    def get_all_awards(self, page=0) -> list:
         url = self.url.awards_url(page)
         return self.request.make_request(url)
 
-    def get_award(self, id):
+    def get_award(self, id: int) -> dict:
         url = self.url.award_url(id, False)
         return self.request.make_request(url)
 
-    def get_award_extended(self, id):
+    def get_award_extended(self, id: int) -> dict:
         url = self.url.award_url(id, True)
         return self.request.make_request(url)
 
-    def get_all_award_categories(self):
+    def get_all_award_categories(self) -> list:
         url = self.url.awards_categories_url()
         return self.request.make_request(url)
 
-    def get_award_category(self, id):
+    def get_award_category(self, id: int) -> dict:
         url = self.url.award_category_url(id, False)
         return self.request.make_request(url)
 
