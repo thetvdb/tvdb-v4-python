@@ -7,7 +7,7 @@ LONG_DESCRIPTION = 'Official python package for using the tvdb v4 api'
 # Setting up
 setup(
     # the name must match the folder name 'verysimplemodule'
-    name="tvdb-api-v4",
+    name="tvdb_api_v4",
     version=VERSION,
     author="Weylin Wagnon",
     author_email="<support@thetvdb.com>",
