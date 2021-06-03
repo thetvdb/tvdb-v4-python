@@ -16,20 +16,20 @@ some projects require a user supplied pin as well as an apikey
     tvdb.get_series(121361)
 
     // fetching a seasons episodes
-    seasons = tvdb.get_series_extended(121361).seasons
+    seasons = tvdb.get_series_extended(121361)["seasons"]
     season_one = None
     for season in seasons:
-        if season.number == 1:
-            season_one
-    episodes = tvdb.get_season_extended(season_one.id).episodes
+        if season["number"] == 1:
+            season_one = season
+    episodes = tvdb.get_season_extended(season_one["id"])["episodes"]
 
     // fetching a movie
     tvdb.get_movie(31) // avengers
 
     // fetching movie's characters
-    characters = tvdb.get_movie_extended(31).characters
+    characters = tvdb.get_movie_extended(31)["characters"]
 
     // fetching a person record
-    person = tvdb.get_person_extended(characters[0].peopleId)
+    person = tvdb.get_person_extended(characters[0]["peopleId"])
 
-    
+
