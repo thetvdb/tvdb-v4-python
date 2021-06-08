@@ -1,13 +1,12 @@
 from setuptools import find_packages, setup
 
-VERSION = '0.0.1'
+VERSION = '1.0.7'
 DESCRIPTION = 'Official tvdb api v4 package'
 LONG_DESCRIPTION = 'Official python package for using the tvdb v4 api'
 
 # Setting up
 setup(
-    # the name must match the folder name 'verysimplemodule'
-    name="tvdb-api-v4",
+    name="tvdb_v4_official",
     version=VERSION,
     author="Weylin Wagnon",
     author_email="<support@thetvdb.com>",
@@ -15,16 +14,15 @@ setup(
     description="tvdb-api-v4 utility package",
     long_description="official python client for the tvdb api v4",
     packages=find_packages(),
-    install_requires=[],  # add any additional packages that
-    # needs to be installed along with your package. Eg: 'caer'
-
+    install_requires=[],
+    py_modules=['tvdb_v4_official'],
     keywords=['python', 'tvdb'],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
-        "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
-    ]
+    ],
+    package_dir={'tvdb_v4_official': 'tvdb_v4_official'}
 )
