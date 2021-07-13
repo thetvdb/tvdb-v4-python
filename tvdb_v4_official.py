@@ -1,8 +1,5 @@
 import json
 import urllib
-import urllib.parse
-import urllib.request
-from urllib.request import urlopen
 
 
 class Auth:
@@ -156,7 +153,7 @@ class Url:
 
     def search_url(self, query, filters):
         filters["query"] = query
-        qs = urllib.urlencode(filters)
+        qs = urllib.parse.urlencode(filters)
         url = "{}/search?{}".format(self.base_url, qs)
         return url
 
@@ -252,10 +249,9 @@ class TVDB:
     def get_series_extended(self, id: int) -> dict:
         """Returns an series extended dictionary"""
         url = self.url.series_url(id, True)
-        print(url)
         return self.request.make_request(url)
 
-    def get_series_translation(self, lang: str) -> dict:
+    def get_series_translation(self, lang: str, id: int) -> dict:
         """Returns a series translation dictionary"""
         url = self.url.series_translation_url(id, lang)
         return self.request.make_request(url)
@@ -337,12 +333,12 @@ class TVDB:
 
     def get_all_tag_options(self, page=0) -> list:
         """Returns a list of tag options"""
-        url = self.url.tag_options_url(page)
+        url = self.url.tag_option_url(page)
         return self.request.make_request(url)
 
     def get_tag_option(self, id: int) -> dict:
         """Returns a tag option dictionary"""
-        url = self.url.tag_option_url()
+        url = self.url.tag_options_url()
         return self.request.make_request(url)
 
     def search(self, query, **kwargs) -> list:
