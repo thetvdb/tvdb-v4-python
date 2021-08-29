@@ -100,6 +100,10 @@ class Url:
             url = "{}/extended".format(url)
         return url
 
+    def series_episodes_url(self, id, season_type, page=0):
+        url = "{}/series/{}/episodes/{}?page={}".format(self.base_url, id, season_type, page)
+        return url
+
     def series_translation_url(self, id, lang):
         url = "{}/series/{}/translations/{}".format(self.base_url, id, lang)
         return url
@@ -254,6 +258,11 @@ class TVDB:
     def get_series_extended(self, id: int) -> dict:
         """Returns an series extended dictionary"""
         url = self.url.series_url(id, True)
+        return self.request.make_request(url)
+
+    def get_series_episodes(self, id: int, season_type: str="default", page: int=0) -> dict:
+        """Returns a series episodes dictionary"""
+        url = self.url.series_episodes_url(id, season_type, page)
         return self.request.make_request(url)
 
     def get_series_translation(self, id: int, lang: str) -> dict:
