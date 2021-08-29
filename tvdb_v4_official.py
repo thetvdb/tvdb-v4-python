@@ -1,8 +1,6 @@
 import json
 import urllib
-import urllib.parse
 import urllib.request
-from urllib.request import urlopen
 
 
 class Auth:
@@ -156,7 +154,7 @@ class Url:
 
     def search_url(self, query, filters):
         filters["query"] = query
-        qs = urllib.urlencode(filters)
+        qs = urllib.parse.urlencode(filters)
         url = "{}/search?{}".format(self.base_url, qs)
         return url
 
