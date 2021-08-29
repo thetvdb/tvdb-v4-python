@@ -100,6 +100,10 @@ class Url:
             url = "{}/extended".format(url)
         return url
 
+    def series_translation_url(self, id, lang):
+        url = "{}/series/{}/translations/{}".format(self.base_url, id, lang)
+        return url
+
     def movies_url(self, page=0):
         url = "{}/movies?page={}".format(self.base_url, page)
         return url
