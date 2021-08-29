@@ -91,7 +91,7 @@ class Url:
         return url
 
     def all_series_url(self, page=0):
-        url = "{}/series".format(self.base_url)
+        url = "{}/series?page={}".format(self.base_url, page)
         return url
 
     def series_url(self, id, extended=False):
@@ -101,7 +101,7 @@ class Url:
         return url
 
     def movies_url(self, page=0):
-        url = "{}/movies".format(self.base_url, id)
+        url = "{}/movies?page={}".format(self.base_url, page)
         return url
 
     def movie_url(self, id, extended=False):
@@ -144,8 +144,8 @@ class Url:
         url = "{}/updates?since={}".format(self.base_url, since)
         return url
 
-    def tag_options_url(self):
-        url = "{}/tags/options".format(self.base_url)
+    def tag_options_url(self, page=0):
+        url = "{}/tags/options?page={}".format(self.base_url, page)
         return url
 
     def tag_option_url(self, id):
@@ -252,7 +252,7 @@ class TVDB:
         url = self.url.series_url(id, True)
         return self.request.make_request(url)
 
-    def get_series_translation(self, lang: str) -> dict:
+    def get_series_translation(self, id: int, lang: str) -> dict:
         """Returns a series translation dictionary"""
         url = self.url.series_translation_url(id, lang)
         return self.request.make_request(url)
@@ -339,7 +339,7 @@ class TVDB:
 
     def get_tag_option(self, id: int) -> dict:
         """Returns a tag option dictionary"""
-        url = self.url.tag_option_url()
+        url = self.url.tag_option_url(id)
         return self.request.make_request(url)
 
     def search(self, query, **kwargs) -> list:
