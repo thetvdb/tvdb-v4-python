@@ -252,7 +252,6 @@ class TVDB:
     def get_series_extended(self, id: int) -> dict:
         """Returns an series extended dictionary"""
         url = self.url.series_url(id, True)
-        print(url)
         return self.request.make_request(url)
 
     def get_series_translation(self, lang: str) -> dict:
