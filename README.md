@@ -6,32 +6,47 @@ This is the official tvdb api v4 python package
 
 ### Getting Started
 some projects require a user supplied pin as well as an apikey
-    
-    import tvdb_v4_official
 
-    tvdb = tvdb_v4_official.TVDB("APIKEY") # tvdb = tvdb_v4.Api("APIKEY", pin="YOUR PIN HERE")
-    
-    # fetching a page of series
-    tvdb.get_all_series(0)
+```python
+import tvdb_v4_official
 
-    # fetching a series 
-    tvdb.get_series(121361)
+tvdb = tvdb_v4_official.TVDB("APIKEY")
+# OR:
+# tvdb = tvdb_v4_official.TVDB("APIKEY", pin="YOUR PIN HERE")
 
-    # fetching a seasons episodes
-    seasons = tvdb.get_series_extended(121361)["seasons"]
-    season_one = None
-    for season in seasons:
-        if season["number"] == 1:
-            season_one = season
-    episodes = tvdb.get_season_extended(season_one["id"])["episodes"]
+# fetching several pages of series info
+series_list = [ ]
+for j in range(5): # Pages are numbered from 0
+    series_list += tvdb.get_all_series(j)
 
-    # fetching a movie
-    tvdb.get_movie(31) # avengers
+# fetching a series
+series = tvdb.get_series(121361)
 
-    # fetching movie's characters
-    characters = tvdb.get_movie_extended(31)["characters"]
+# fetching a season's episode list
+series = tvdb.get_series_extended(121361)
+for season in sorted(series["seasons"], key=lambda x: (x['name'], x['number'])):
+    if season["name"] == 'Aired Order' and season["number"] == 1:
+	season = tvdb.get_season_extended(season["id"])
+	break
+else:
+    season = None
+if season is not None:
+    print(season["episodes"])
 
-    # fetching a person record
-    person = tvdb.get_person_extended(characters[0]["peopleId"])
+# fetch a page of episodes from a series by season_type (type is "default" if unspecified)
+info = tvdb.get_series_episodes(121361, page=0)
+print(info["series"])
+for ep in info["episodes"]:
+    print(ep)
 
+# fetching a movie
+movie = tvdb.get_movie(31) # avengers
 
+# access a movie's characters
+movie = tvdb.get_movie_extended(31)
+for c in movie["characters"]:
+    print(c)
+
+# fetching a person record
+person = tvdb.get_person_extended(characters[0]["peopleId"])
+```

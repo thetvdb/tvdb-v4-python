@@ -1,8 +1,6 @@
 import json
 import urllib
-import urllib.parse
 import urllib.request
-from urllib.request import urlopen
 
 
 class Auth:
@@ -93,7 +91,7 @@ class Url:
         return url
 
     def all_series_url(self, page=0):
-        url = "{}/series".format(self.base_url)
+        url = "{}/series?page={}".format(self.base_url, page)
         return url
 
     def series_url(self, id, extended=False):
@@ -102,8 +100,16 @@ class Url:
             url = "{}/extended".format(url)
         return url
 
+    def series_episodes_url(self, id, season_type, page=0):
+        url = "{}/series/{}/episodes/{}?page={}".format(self.base_url, id, season_type, page)
+        return url
+
+    def series_translation_url(self, id, lang):
+        url = "{}/series/{}/translations/{}".format(self.base_url, id, lang)
+        return url
+
     def movies_url(self, page=0):
-        url = "{}/movies".format(self.base_url, id)
+        url = "{}/movies?page={}".format(self.base_url, page)
         return url
 
     def movie_url(self, id, extended=False):
@@ -134,7 +140,7 @@ class Url:
         url = "{}/characters/{}".format(self.base_url, id)
         return url
 
-    def people_types_url(self, id):
+    def people_types_url(self):
         url = "{}/people/types".format(self.base_url)
         return url
 
@@ -146,17 +152,27 @@ class Url:
         url = "{}/updates?since={}".format(self.base_url, since)
         return url
 
-    def tag_options_url(self):
-        url = "{}/tags/options".format(self.base_url)
+    def tag_options_url(self, page=0):
+        url = "{}/tags/options?page={}".format(self.base_url, page)
         return url
 
     def tag_option_url(self, id):
         url = "{}/tags/options/{}".format(self.base_url, id)
         return url
 
+    def lists_url(self, page=0):
+        url = "{}/lists?page={}".format(self.base_url, page)
+        return url
+
+    def list_url(self, id, extended=False):
+        url = "{}/lists/{}".format(self.base_url, id)
+        if extended:
+            url = "{}/extended".format(url)
+        return url
+
     def search_url(self, query, filters):
         filters["query"] = query
-        qs = urllib.urlencode(filters)
+        qs = urllib.parse.urlencode(filters)
         url = "{}/search?{}".format(self.base_url, qs)
         return url
 
@@ -252,10 +268,14 @@ class TVDB:
     def get_series_extended(self, id: int) -> dict:
         """Returns an series extended dictionary"""
         url = self.url.series_url(id, True)
-        print(url)
         return self.request.make_request(url)
 
-    def get_series_translation(self, lang: str) -> dict:
+    def get_series_episodes(self, id: int, season_type: str="default", page: int=0) -> dict:
+        """Returns a series episodes dictionary"""
+        url = self.url.series_episodes_url(id, season_type, page)
+        return self.request.make_request(url)
+
+    def get_series_translation(self, id: int, lang: str) -> dict:
         """Returns a series translation dictionary"""
         url = self.url.series_translation_url(id, lang)
         return self.request.make_request(url)
@@ -342,7 +362,19 @@ class TVDB:
 
     def get_tag_option(self, id: int) -> dict:
         """Returns a tag option dictionary"""
-        url = self.url.tag_option_url()
+        url = self.url.tag_option_url(id)
+        return self.request.make_request(url)
+
+    def get_all_lists(self, page=0) -> dict:
+        url = self.url.lists_url(page)
+        return self.request.make_request(url)
+
+    def get_list(self, id: int) -> dict:
+        url = self.url.list_url(id)
+        return self.request.make_request(url)
+
+    def get_list_extended(self, id: int) -> dict:
+        url = self.url.list_url(id, True)
         return self.request.make_request(url)
 
     def search(self, query, **kwargs) -> list:
