@@ -140,7 +140,7 @@ class Url:
         url = "{}/characters/{}".format(self.base_url, id)
         return url
 
-    def people_types_url(self, id):
+    def people_types_url(self):
         url = "{}/people/types".format(self.base_url)
         return url
 
