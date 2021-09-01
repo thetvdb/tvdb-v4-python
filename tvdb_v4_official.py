@@ -160,6 +160,16 @@ class Url:
         url = "{}/tags/options/{}".format(self.base_url, id)
         return url
 
+    def lists_url(self, page=0):
+        url = "{}/lists?page={}".format(self.base_url, page)
+        return url
+
+    def list_url(self, id, extended=False):
+        url = "{}/lists/{}".format(self.base_url, id)
+        if extended:
+            url = "{}/extended".format(url)
+        return url
+
     def search_url(self, query, filters):
         filters["query"] = query
         qs = urllib.parse.urlencode(filters)
@@ -353,6 +363,18 @@ class TVDB:
     def get_tag_option(self, id: int) -> dict:
         """Returns a tag option dictionary"""
         url = self.url.tag_option_url(id)
+        return self.request.make_request(url)
+
+    def get_all_lists(self, page=0) -> dict:
+        url = self.url.lists_url(page)
+        return self.request.make_request(url)
+
+    def get_list(self, id: int) -> dict:
+        url = self.url.list_url(id)
+        return self.request.make_request(url)
+
+    def get_list_extended(self, id: int) -> dict:
+        url = self.url.list_url(id, True)
         return self.request.make_request(url)
 
     def search(self, query, **kwargs) -> list:
