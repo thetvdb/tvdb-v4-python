@@ -36,4 +36,3 @@ characters = tvdb.get_movie_extended(31)["characters"]
 # fetching a person record
 person = tvdb.get_person_extended(characters[0]["peopleId"])
 ```
-
