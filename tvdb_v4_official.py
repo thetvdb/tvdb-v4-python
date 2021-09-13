@@ -52,10 +52,8 @@ class Url:
             url = "{}/extended".format(url)
         return url
 
-    def awards_url(self, page):
-        if page < 0:
-            page = 0
-        url = "{}/awards?page={}".format(self.base_url, page)
+    def awards_url(self):
+        url = "{}/awards".format(self.base_url)
         return url
 
     def award_url(self, id, extended=False):
@@ -118,16 +116,44 @@ class Url:
             url = "{}/extended".format(url)
         return url
 
+    def all_seasons_url(self, page=0):
+        url = "{}/seasons?page={}".format(self.base_url, page)
+        return url
+
     def season_url(self, id, extended=False):
         url = "{}/seasons/{}".format(self.base_url, id)
         if extended:
             url = "{}/extended".format(url)
         return url
 
+    def season_types_url(self):
+        url = "{}/seasons/types".format(self.base_url)
+        return url
+
+    def season_translation_url(self, id, lang):
+        url = "{}/seasons/{}/translations/{}".format(self.base_url, id, lang)
+        return url
+
     def episode_url(self, id, extended=False):
         url = "{}/episodes/{}".format(self.base_url, id)
         if extended:
             url = "{}/extended".format(url)
+        return url
+
+    def genders_url(self):
+        url = "{}/genders".format(self.base_url)
+        return url
+
+    def genres_url(self):
+        url = "{}/genres".format(self.base_url)
+        return url
+
+    def genre_url(self, id):
+        url = "{}/genres/{id}".format(self.base_url)
+        return url
+
+    def languages_url(self):
+        url = "{}/languages".format(self.base_url)
         return url
 
     def person_url(self, id, extended=False):
@@ -205,9 +231,9 @@ class TVDB:
         url = self.url.artwork_url(id, True)
         return self.request.make_request(url)
 
-    def get_all_awards(self, page=0) -> list:
+    def get_all_awards(self) -> list:
         """Returns a list of awards"""
-        url = self.url.awards_url(page)
+        url = self.url.awards_url()
         return self.request.make_request(url)
 
     def get_award(self, id: int) -> dict:
@@ -226,7 +252,7 @@ class TVDB:
         return self.request.make_request(url)
 
     def get_award_category(self, id: int) -> dict:
-        """Returns an artwork category dictionary"""
+        """Returns an award category dictionary"""
         url = self.url.award_category_url(id, False)
         return self.request.make_request(url)
 
@@ -266,7 +292,7 @@ class TVDB:
         return self.request.make_request(url)
 
     def get_series_extended(self, id: int) -> dict:
-        """Returns an series extended dictionary"""
+        """Returns a series extended dictionary"""
         url = self.url.series_url(id, True)
         return self.request.make_request(url)
 
@@ -300,6 +326,11 @@ class TVDB:
         url = self.url.movie_translation_url(id, lang)
         return self.request.make_request(url)
 
+    def get_all_seasons(self, page=0) -> list:
+        """Returns a list of seasons"""
+        url = self.url.all_seasons_url(page)
+        return self.request.make_request(url)
+
     def get_season(self, id: int) -> dict:
         """Returns a season dictionary"""
         url = self.url.season_url(id, False)
@@ -308,6 +339,16 @@ class TVDB:
     def get_season_extended(self, id: int) -> dict:
         """Returns a season extended dictionary"""
         url = self.url.season_url(id, True)
+        return self.request.make_request(url)
+
+    def get_season_types(self) -> list:
+        """Returns a list of season types"""
+        url = self.url.season_types_url()
+        return self.request.make_request(url)
+
+    def get_season_translation(self, id: int, lang: str) -> dict:
+        """Returns a seasons translation dictionary"""
+        url = self.url.season_translation_url(id, lang)
         return self.request.make_request(url)
 
     def get_episode(self, id: int) -> dict:
@@ -323,6 +364,26 @@ class TVDB:
     def get_episode_extended(self, id: int) -> dict:
         """Returns an episode extended dictionary"""
         url = self.url.episode_url(id, True)
+        return self.request.make_request(url)
+
+    def get_all_genders(self) -> list:
+        """Returns a list of genders"""
+        url = self.url.genders_url()
+        return self.request.make_request(url)
+
+    def get_all_genres(self) -> list:
+        """Returns a list of genres"""
+        url = self.url.genres_url()
+        return self.request.make_request(url)
+
+    def get_genre(self, id: int) -> dict:
+        """Returns a genres dictionary"""
+        url = self.url.genre_url(id, False)
+        return self.request.make_request(url)
+
+    def get_all_languages(self) -> list:
+        """Returns a list of languages"""
+        url = self.url.languages_url()
         return self.request.make_request(url)
 
     def get_person(self, id: int) -> dict:
