@@ -1,6 +1,7 @@
 import json
 import urllib
 import urllib.request
+from urllib.error import HTTPError
 
 
 class Auth:
@@ -27,10 +28,21 @@ class Request:
     def make_request(self, url):
         req = urllib.request.Request(url)
         req.add_header("Authorization", "Bearer {}".format(self.auth_token))
-        with urllib.request.urlopen(req) as response:
-            res = json.load(response)
-            data = res["data"]
+        try:
+            with urllib.request.urlopen(req) as response:
+                res = json.load(response)
+        except HTTPError as e:
+            try:
+                res = json.load(e)
+            except:
+                res = { }
+        data = res.get("data", None)
+        if data and res.get('status', 'failure') != 'failure':
             return data
+        msg = res.get('message', None)
+        if not msg:
+            msg = 'UNKNOWN FAILURE'
+        raise ValueError("failed to get " + url + "\n  " + str(msg))
 
 
 class Url:
