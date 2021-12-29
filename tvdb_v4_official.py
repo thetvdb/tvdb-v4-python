@@ -279,10 +279,14 @@ class TVDB:
         url = self.url.construct('people/types', meta=meta)
         return self.request.make_request(url)
 
+    get_all_people_types = get_people_types # Support the old function name
+
     def get_source_types(self, meta=None) -> list:
         """Returns a list of source types"""
         url = self.url.construct('sources/types', meta=meta)
         return self.request.make_request(url)
+
+    get_all_sourcetypes = get_source_types # Support the old function name
 
     # kwargs accepts args such as: page=2, action='update', type='artwork'
     def get_updates(self, since: int, **kwargs) -> list:
