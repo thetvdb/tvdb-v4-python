@@ -227,11 +227,6 @@ class TVDB:
         url = self.url.construct('episodes', id, 'extended', meta=meta)
         return self.request.make_request(url)
     
-    def get_episodes_translation(self, id: int, lang: str) -> dict:
-        """Returns an episode translation dictionary"""
-        url = self.url.construct('episodes',id,'translations', lang)
-        return self.request.make_request(url)
-
     def get_episode_translation(self, id: int, lang: str, meta=None) -> dict:
         """Returns an episode translation dictionary"""
         url = self.url.construct('episodes', id, 'translations', lang, meta=meta)
