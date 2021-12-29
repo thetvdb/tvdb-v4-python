@@ -153,6 +153,10 @@ class Url:
             url = "{}/extended".format(url)
         return url
 
+    def episode_translation_url(self, id, lang):
+        url = "{}/episodes/{}/translations/{}".format(self.base_url, id, lang)
+        return url
+
     def genders_url(self):
         url = "{}/genders".format(self.base_url)
         return url
@@ -369,7 +373,7 @@ class TVDB:
         url = self.url.episode_url(id, False)
         return self.request.make_request(url)
 
-    def get_episodes_translation(self, lang: str) -> dict:
+    def get_episodes_translation(self, id: int, lang: str) -> dict:
         """Returns an episode translation dictionary"""
         url = self.url.episode_translation_url(id, lang)
         return self.request.make_request(url)
