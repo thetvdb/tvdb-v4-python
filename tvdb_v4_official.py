@@ -37,7 +37,7 @@ class Request:
             except:
                 res = { }
         data = res.get("data", None)
-        if data and res.get('status', 'failure') != 'failure':
+        if data is not None and res.get('status', 'failure') != 'failure':
             return data
         msg = res.get('message', None)
         if not msg:
