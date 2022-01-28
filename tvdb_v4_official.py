@@ -24,6 +24,7 @@ class Auth:
 class Request:
     def __init__(self, auth_token):
         self.auth_token = auth_token
+        self.links = None
 
     def make_request(self, url):
         req = urllib.request.Request(url)
@@ -38,6 +39,7 @@ class Request:
                 res = { }
         data = res.get("data", None)
         if data is not None and res.get('status', 'failure') != 'failure':
+            self.links = res.get("links", None)
             return data
         msg = res.get('message', None)
         if not msg:
@@ -71,6 +73,9 @@ class TVDB:
         self.auth = Auth(login_url, apikey, pin)
         auth_token = self.auth.get_token()
         self.request = Request(auth_token)
+
+    def get_req_links(self) -> dict:
+        return self.request.links
 
     def get_artwork_statuses(self, meta=None) -> list:
         """Returns a list of artwork statuses"""
@@ -328,4 +333,9 @@ class TVDB:
     def search(self, query, **kwargs) -> list:
         """Returns a list of search results"""
         url = self.url.construct('search', query=query, **kwargs)
+        return self.request.make_request(url)
+
+    def get_tags(self, slug: str) -> dict:
+        """Returns a tag option dictionary"""
+        url = self.url.construct('entities', url_subsect=slug)
         return self.request.make_request(url)
