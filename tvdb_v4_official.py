@@ -329,3 +329,8 @@ class TVDB:
         """Returns a list of search results"""
         url = self.url.construct('search', query=query, **kwargs)
         return self.request.make_request(url)
+
+    def get_tags(self, slug: str) -> dict:
+        """Returns a tag option dictionary"""
+        url = self.url.construct('entities', url_subsect=slug)
+        return self.request.make_request(url)
