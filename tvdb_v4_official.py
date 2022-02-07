@@ -334,3 +334,8 @@ class TVDB:
         """Returns a tag option dictionary"""
         url = self.url.construct('entities', url_subsect=slug)
         return self.request.make_request(url)
+
+    def get_entities_types(self) -> dict:
+        """Returns a tag option dictionary"""
+        url = self.url.construct('entities')
+        return self.request.make_request(url)
