@@ -13,9 +13,15 @@ class Auth:
         loginInfoBytes = json.dumps(loginInfo, indent=2).encode('utf-8')
         req = urllib.request.Request(url, data=loginInfoBytes)
         req.add_header("Content-Type", "application/json")
-        with urllib.request.urlopen(req, data=loginInfoBytes) as response:
-            res = json.load(response)
-            self.token = res["data"]["token"]
+        try:
+            with urllib.request.urlopen(req, data=loginInfoBytes) as response:
+                res = json.load(response)
+                self.token = res["data"]["token"]
+        except HTTPError as e:        
+                res = json.load(e)
+                raise Exception("Code:{}, {}".format(e,res['message']))
+        
+        
 
     def get_token(self):
         return self.token
