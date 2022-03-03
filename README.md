@@ -27,8 +27,8 @@ series = tvdb.get_series(121361)
 series = tvdb.get_series_extended(121361)
 for season in sorted(series["seasons"], key=lambda x: (x["type"]["name"], x["number"])):
     if season["type"]["name"] == "Aired Order" and season["number"] == 1:
-	season = tvdb.get_season_extended(season["id"])
-	break
+	    season = tvdb.get_season_extended(season["id"])
+	    break
 else:
     season = None
 if season is not None:
