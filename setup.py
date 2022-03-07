@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-VERSION = '1.0.7'
+VERSION = '1.0.8'
 DESCRIPTION = 'Official tvdb api v4 package'
 LONG_DESCRIPTION = 'Official python package for using the tvdb v4 api'
 
