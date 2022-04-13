@@ -228,6 +228,11 @@ class TVDB:
         url = self.url.construct('seasons', id, 'translations', lang, meta=meta)
         return self.request.make_request(url)
 
+    def get_all_episodes(self, page=None, meta=None) -> list:
+        """Returns a list of episodes"""
+        url = self.url.construct('episodes', page=page, meta=meta)
+        return self.request.make_request(url)
+
     def get_episode(self, id: int, meta=None) -> dict:
         """Returns an episode dictionary"""
         url = self.url.construct('episodes', id, meta=meta)
@@ -263,6 +268,11 @@ class TVDB:
     def get_all_languages(self, meta=None) -> list:
         """Returns a list of languages"""
         url = self.url.construct('languages', meta=meta)
+        return self.request.make_request(url)
+
+    def get_all_people(self, page=None, meta=None) -> list:
+        """Returns a list of people"""
+        url = self.url.construct('people', page=page, meta=meta)
         return self.request.make_request(url)
 
     def get_person(self, id: int, meta=None) -> dict:
