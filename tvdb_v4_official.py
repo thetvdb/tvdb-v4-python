@@ -168,9 +168,10 @@ class TVDB:
         url = self.url.construct('series', id, meta=meta)
         return self.request.make_request(url)
 
-    def get_series_extended(self, id: int, meta=None) -> dict:
+    def get_series_extended(self, id: int, meta=None, short=False) -> dict:
         """Returns a series extended dictionary"""
-        url = self.url.construct('series', id, 'extended', meta=meta)
+        url = self.url.construct('series', id, 'extended', meta=meta, short=short)
+        print(url)
         return self.request.make_request(url)
 
     def get_series_episodes(self, id: int, season_type: str="default", page: int=0, lang: str=None, meta=None) -> dict:
@@ -193,9 +194,9 @@ class TVDB:
         url = self.url.construct('movies', id, meta=meta)
         return self.request.make_request(url)
 
-    def get_movie_extended(self, id: int, meta=None) -> dict:
+    def get_movie_extended(self, id: int, meta=None, short=False) -> dict:
         """Returns a movie extended dictionary"""
-        url = self.url.construct('movies', id, 'extended', meta=meta)
+        url = self.url.construct('movies', id, 'extended', meta=meta, short=short)
         return self.request.make_request(url)
 
     def get_movie_translation(self, id: int, lang: str, meta=None) -> dict:
@@ -350,6 +351,11 @@ class TVDB:
         """Returns a list of search results"""
         url = self.url.construct('search', query=query, **kwargs)
         return self.request.make_request(url)
+    
+    def search_by_remote_id(self, remoteid: str) -> list:
+        """Returns a list of search results by remote id exact match"""
+        url = self.url.construct('search/remoteid', remoteid)
+        return self.request.make_request(url)
 
     def get_tags(self, slug: str) -> dict:
         """Returns a tag option dictionary"""
@@ -359,4 +365,14 @@ class TVDB:
     def get_entities_types(self) -> dict:
         """Returns a entities types dictionary"""
         url = self.url.construct('entities')
+        return self.request.make_request(url)
+    
+    def get_user_by_id(self, id: int) -> dict:
+        """Returns a user info dictionary"""
+        url = self.url.construct('user', id)
+        return self.request.make_request(url)
+
+    def get_user(self) -> dict:
+        """Returns a user info dictionary"""
+        url = self.url.construct('user')
         return self.request.make_request(url)
