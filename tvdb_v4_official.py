@@ -35,11 +35,15 @@ class Request:
     def make_request(self, url, if_modified_since=None):
         req = urllib.request.Request(url)
         req.add_header("Authorization", "Bearer {}".format(self.auth_token))
+        if if_modified_since:
+            req.add_header("If-Modified-Since", "{}".format(if_modified_since))
         try:
             with urllib.request.urlopen(req) as response:
                 res = json.load(response)
         except HTTPError as e:
             try:
+                if e.code == 304:
+                    return {"code":304, "message":"Not-Modified"}
                 res = json.load(e)
             except:
                 res = { }
@@ -181,6 +185,11 @@ class TVDB:
     def get_series_translation(self, id: int, lang: str, meta=None,if_modified_since=None) -> dict:
         """Returns a series translation dictionary"""
         url = self.url.construct('series', id, 'translations', lang, meta=meta)
+        return self.request.make_request(url, if_modified_since)
+    
+    def get_series_artworks(self, id: int, lang: str, type=None, if_modified_since=None) -> dict:
+        """Returns a series record with an artwork array"""
+        url = self.url.construct('series', id, 'artworks', lang=lang, type=type)
         return self.request.make_request(url, if_modified_since)
 
     def get_all_movies(self, page=None, meta=None,if_modified_since=None) -> list:
@@ -333,7 +342,7 @@ class TVDB:
         url = self.url.construct('lists', id, meta=meta)
         return self.request.make_request(url), if_modified_since
 
-    def get_list_extended(self, id: int, meta=None,if_modified_since=None) -> dict:
+    def get_list_extended(self, id: int, meta=None, if_modified_since=None) -> dict:
         url = self.url.construct('lists', id, 'extended', meta=meta)
         return self.request.make_request(url), if_modified_since
 
