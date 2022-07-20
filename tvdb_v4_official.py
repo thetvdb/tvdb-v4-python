@@ -192,6 +192,11 @@ class TVDB:
         url = self.url.construct('series', id, 'artworks', lang=lang, type=type)
         return self.request.make_request(url, if_modified_since)
 
+    def get_series_nextAired(self, id: int, if_modified_since=None) -> dict:
+        """Returns a series extended dictionary"""
+        url = self.url.construct('series', id, 'nextAired')
+        return self.request.make_request(url, if_modified_since)
+
     def get_all_movies(self, page=None, meta=None,if_modified_since=None) -> list:
         """Returns a list of movies"""
         url = self.url.construct('movies', page=page, meta=meta)
