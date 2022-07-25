@@ -1,7 +1,7 @@
 # tvdb-v4-python
 This is the official tvdb api v4 python package
 
-### Instalation
+### Installation 
 ```bash
 python3 -m pip install tvdb_v4_official
 ```
