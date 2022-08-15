@@ -1,4 +1,5 @@
 import json
+import string
 import urllib
 import urllib.request
 from urllib.error import HTTPError
@@ -171,6 +172,11 @@ class TVDB:
         """Returns a series dictionary"""
         url = self.url.construct('series', id, meta=meta)
         return self.request.make_request(url, if_modified_since)
+    
+    def get_series_by_slug(self, slug: string, meta=None,if_modified_since=None) -> dict:
+        """Returns a series dictionary"""
+        url = self.url.construct('series/slug', slug, meta=meta)
+        return self.request.make_request(url, if_modified_since)
 
     def get_series_extended(self, id: int, meta=None, short=False,if_modified_since=None) -> dict:
         """Returns a series extended dictionary"""
@@ -205,6 +211,11 @@ class TVDB:
     def get_movie(self, id: int, meta=None,if_modified_since=None) -> dict:
         """Returns a movie dictionary"""
         url = self.url.construct('movies', id, meta=meta)
+        return self.request.make_request(url, if_modified_since)
+    
+    def get_movie_by_slug(self, slug: string, meta=None,if_modified_since=None) -> dict:
+        """Returns a movie dictionary"""
+        url = self.url.construct('movies/slug', slug, meta=meta)
         return self.request.make_request(url, if_modified_since)
 
     def get_movie_extended(self, id: int, meta=None, short=False,if_modified_since=None) -> dict:
