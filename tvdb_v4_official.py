@@ -357,6 +357,11 @@ class TVDB:
     def get_list(self, id: int, meta=None,if_modified_since=None) -> dict:
         url = self.url.construct('lists', id, meta=meta)
         return self.request.make_request(url), if_modified_since
+    
+    def get_list_by_slug(self, slug: string, meta=None,if_modified_since=None) -> dict:
+        """Returns a movie dictionary"""
+        url = self.url.construct('lists/slug', slug, meta=meta)
+        return self.request.make_request(url, if_modified_since)
 
     def get_list_extended(self, id: int, meta=None, if_modified_since=None) -> dict:
         url = self.url.construct('lists', id, 'extended', meta=meta)
