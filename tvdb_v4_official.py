@@ -2,6 +2,7 @@ import json
 import string
 import urllib
 import urllib.request
+from http import HTTPStatus
 from urllib.error import HTTPError
 
 
@@ -41,8 +42,11 @@ class Request:
                 res = json.load(response)
         except HTTPError as e:
             try:
-                if e.code == 304:
-                    return {"code": 304, "message": "Not-Modified"}
+                if e.code == HTTPStatus.NOT_MODIFIED:
+                    return {
+                        "code": HTTPStatus.NOT_MODIFIED.real,
+                        "message": "Not-Modified",
+                    }
                 res = json.load(e)
             except:
                 res = {}
