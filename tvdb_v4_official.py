@@ -201,10 +201,11 @@ class TVDB:
         lang: str = None,
         meta=None,
         if_modified_since=None,
+        **kwargs
     ) -> dict:
         """Returns a series episodes dictionary"""
         url = self.url.construct(
-            "series", id, "episodes/" + season_type, lang, page=page, meta=meta
+            "series", id, "episodes/" + season_type, lang, page=page, meta=meta, **kwargs
         )
         return self.request.make_request(url, if_modified_since)
 
