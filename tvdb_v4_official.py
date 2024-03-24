@@ -445,3 +445,8 @@ class TVDB:
         """Returns a user info dictionary"""
         url = self.url.construct("user")
         return self.request.make_request(url)
+
+    def get_user_favorites(self) -> dict:
+        """Returns a user info dictionary"""
+        url = self.url.construct('user/favorites')
+        return self.request.make_request(url)
